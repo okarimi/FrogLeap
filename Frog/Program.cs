@@ -42,6 +42,11 @@ public class Frog
         return count;
     }
 
+    /// <summary>
+    /// Factorial grows rapidy causing overflow exxception to be thrown.
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
     public static Int64 factorial(int n)
     {
         checked
