@@ -10,35 +10,29 @@ public class Frog
         // Count of combinations for red only traversal.
         long count = 1;
 
-        try {
-            // Add all possible combinations of jump-step 
-            for (int jumps = 1; jumps <= maxJumps; jumps++)
+        // Add all possible combinations of jump-step 
+        for (int jumps = 1; jumps <= maxJumps; jumps++)
+        {
+            // Remaining steps (red) for current jumps.
+            int steps = n - 2 * jumps;
+
+            // For any number of jumps, compute total combination of jump-steps
+            checked
             {
-                // Remaining steps (red) for current jumps.
-                int steps = n - 2 * jumps;
+                // Total ordered reds.
+                Int64 s = factorial(steps);
 
-                // For any number of jumps, compute total combination of jump-steps
-                checked
-                {
-                    // Total ordered reds.
-                    Int64 s = factorial(steps);
+                // Total ordered blues.
+                Int64 j = factorial(jumps);
 
-                    // Total ordered blues.
-                    Int64 j = factorial(jumps);
+                // Total ordered combined.
+                Int64 sj = factorial(steps + jumps);
 
-                    // Total ordered combined.
-                    Int64 sj = factorial(steps + jumps);
-
-                    // Total combined red-blue for unordered red-blue. 
-                    count += sj / (s * j);
-                }
+                // Total combined red-blue for unordered red-blue. 
+                count += sj / (s * j);
             }
         }
-        catch(OverflowException e)
-        {
-            Console.WriteLine(e.Message);
-        }
-
+        
         return count;
     }
 
@@ -64,9 +58,18 @@ public class Frog
 
     public static void Main(String[] args)
     {
-        Console.WriteLine("Enter a number");
-        string s = Console.ReadLine();
-        Console.WriteLine("The answer is: " + NumberOfWays(int.Parse(s)));
-        Console.Read();
+        try { 
+            Console.WriteLine("Enter a number");
+            string s = Console.ReadLine();
+            Console.WriteLine("The answer is: " + NumberOfWays(int.Parse(s)));
+        }
+        catch(OverflowException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            Console.Read();
+        }
     }
 }
